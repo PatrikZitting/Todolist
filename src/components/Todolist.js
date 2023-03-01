@@ -8,8 +8,14 @@ function Todolist() {
   const addTodo = (event) => {
     event.preventDefault();
     setTodos([...todos, todo]);
-    setTodo("");
+    setTodo({ desc: "", date: "" });
   };
+
+  const deleteTodo = (index) => {
+    const newTodos = todos.filter((todo, i) => i !== index);
+    setTodos(newTodos);
+  };
+
   const inputChanged = (event) => {
     setTodo({ ...todo, [event.target.name]: event.target.value });
   };
@@ -36,11 +42,15 @@ function Todolist() {
           <tr>
             <th>Date</th>
             <th>Description</th>
+            <th>Action</th>
           </tr>
           {todos.map((todo, index) => (
             <tr key={index}>
               <td>{todo.date}</td>
               <td>{todo.desc}</td>
+              <td>
+                <button onClick={() => deleteTodo(index)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
